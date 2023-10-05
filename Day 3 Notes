@@ -1,5 +1,3 @@
-
-
  The "Fetch: Cross-Origin Requests" error typically occurs when you are trying to make an XMLHttpRequest (or fetch) request to a domain different from the one hosting your webpage, and the server does not allow cross-origin requests. This is a security feature called Cross-Origin Resource Sharing (CORS). Browsers enforce CORS to prevent web pages from making unauthorized requests to different domains.
 
 To resolve this issue, you have a few options:
