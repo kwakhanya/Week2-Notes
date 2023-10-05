@@ -1,0 +1,54 @@
+ To send a simple form in JavaScript, you can use the fetch API to make an HTTP POST request to a server that handles form submissions.
+Daily Notes - Sending a simple form
+ To send a simple form in JavaScript, you can use the fetch API to make an HTTP POST request to a server that handles form submissions.
+Daily Notes - FormData Methods
+ We can modify fields in FormData with methods:
+
+formData.append(name, value) – add a form field with the given name and value,
+formData.append(name, blob, fileName) – add a field as if it were <input type="file">, the third argument fileName sets file name (not form field name), as it it were a name of the file in user’s filesystem,
+formData.delete(name) – remove the field with the given name,
+formData.get(name) – get the value of the field with the given name,
+formData.has(name) – if there exists a field with the given name, returns true, otherwise false
+A form is technically allowed to have many fields with the same name, so multiple calls to append add more same-named fields.
+
+There’s also method set, with the same syntax as append. The difference is that .set removes all fields with the given name, and then appends a new field. So it makes sure there’s only field with such name:
+
+formData.set(name, value),
+formData.set(name, blob, fileName).
+Daily Notes - Sending a form with a file
+ To send a form with a file using JavaScript, you can use the FormData object to gather form data, including the file input, and then send it as a POST request using the fetch API.
+Daily Notes - Fetch: Download progress
+ The fetch method allows to track download progress.
+To track download progress, we can use response.body property. It’s a “readable stream” – a special object that provides body chunk-by-chunk, as it comes.
+
+Unlike response.text(), response.json() and other methods, response.body gives full control over the reading process, and we can count how much is consumed at any moment.
+To create a string, we need to interpret these bytes.
+Daily Notes - Sending a form with Blob data
+ Sending a form with Blob data usually involves a combination of HTML and JavaScript to create and submit the form. Blob data can represent various types of binary data, such as images, videos, or other file types.
+FormData objects are used to capture HTML form and submit it using fetch or another network method.
+
+We can either create new FormData(form) from an HTML form, or create an empty object, and then append fields with methods:
+
+formData.append(name, value)
+formData.append(name, blob, fileName)
+formData.set(name, value)
+formData.set(name, blob, fileName)
+Two peculiarities here:
+
+The set method removes fields with the same name, append doesn’t.
+To send a file, 3-argument syntax is needed, the last argument is a file name, that normally is taken from user filesystem for <input type="file">.
+Other methods are:
+
+formData.delete(name)
+formData.get(name)
+formData.has(name)
+Daily Notes - Fetch: Abort
+ If you are encountering a "Fetch: Abort" error, it typically means that the XMLHttpRequest request is being aborted for some reason. There could be several reasons for this error:
+
+Request Aborted Manually: The request might be aborted manually somewhere in your code. Check if you have any code that explicitly calls xhr.abort().
+
+Network Issues: Network issues such as a lost connection or the server not responding can also result in aborted requests.
+
+Cross-Origin Issues: If you are making a request to a different domain than your webpage, you might encounter CORS (Cross-Origin Resource Sharing) issues that lead to the request being aborted.
+
+Server Issues: The server you are trying to request content from might be misconfigured or not properly handling requests.
