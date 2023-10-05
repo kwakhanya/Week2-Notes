@@ -1,1 +1,95 @@
 
+
+ The "Fetch: Cross-Origin Requests" error typically occurs when you are trying to make an XMLHttpRequest (or fetch) request to a domain different from the one hosting your webpage, and the server does not allow cross-origin requests. This is a security feature called Cross-Origin Resource Sharing (CORS). Browsers enforce CORS to prevent web pages from making unauthorized requests to different domains.
+
+To resolve this issue, you have a few options:
+ 
+
+Enable CORS on the Server: If you have control over the server you are making requests to, you can configure it to allow cross-origin requests by setting appropriate CORS headers in the server's response. The server should include headers like Access-Control-Allow-Origin to specify which domains are allowed to make requests.
+Cross-Origin Requests
+ The "Fetch: Cross-Origin Requests" error typically occurs when you are trying to make an XMLHttpRequest (or fetch) request to a domain different from the one hosting your webpage, and the server does not allow cross-origin requests. This is a security feature called Cross-Origin Resource Sharing (CORS). Browsers enforce CORS to prevent web pages from making unauthorized requests to different domains.
+
+To resolve this issue, you have a few options:
+
+Enable CORS on the Server: If you have control over the server you are making requests to, you can configure it to allow cross-origin requests by setting appropriate CORS headers in the server's response. The server should include headers like Access-Control-Allow-Origin to specify which domains are allowed to make requests.
+Using Forms
+ One way to communicate with another server was to submit a <form> there. People submitted it into <iframe>, just to stay on the current page.
+So, it was possible to make a GET/POST request to another site, even without networking methods. But as it’s forbidden to access the content of an <iframe>from another site, it wasn’t possible to read the response.
+Simple Requests
+ There are two types of cross-domain requests:
+
+Simple requests.
+
+All the others.
+
+Simple Requests are, well, simpler to make, so let’s start with them.
+
+A simple request is a request that satisfies two conditions:
+
+Simple method: GET, POST or HEAD
+
+Simple headers – the only allowed custom headers are:
+
+Accept,
+Accept-Language,
+Content-Language,
+Content-Type with the value application/x-www-form-urlencoded, multipart/form-data or text/plain.
+
+Any other request is considered “non-simple”. For instance, a request with PUT method or with an API-Key HTTP-header does not fit the limitations.
+
+The essential difference is that a “simple request” can be made with a <form> or a <script>, without any special methods.
+
+So, even a very old server should be ready to accept a simple request.
+
+Contrary to that, requests with non-standard headers or e.g. method DELETE can’t be created this way. For a long time, JavaScript was unable to do such requests. So an old server may assume that such requests come from a privileged source, “because a webpage is unable to send them”.
+
+When we try to make a non-simple request, the browser sends a special “preflight” request that asks the server – does it agree to accept such cross-origin requests, or not?
+
+And, unless the server explicitly confirms that with headers, a non-simple request is not sent.
+
+CORS for Simple Requests
+ CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one hosting the web page. However, CORS restrictions can be relaxed for "simple requests." Simple requests meet specific criteria, and browsers allow them without requiring preflight (OPTIONS) requests.
+
+To qualify as a simple request, the following conditions must be met:
+
+HTTP Method: The request must use one of the following HTTP methods: GET, HEAD, or POST.
+
+Content-Type Header: If the request is a POST request, the Content-Type header of the request must be one of the following values:
+
+application/x-www-form-urlencoded
+multipart/form-data
+text/plain
+Custom Headers: The request can only include the following simple headers:
+
+Accept
+Accept-Language
+Content-Language
+Content-Type (if it is one of the allowed values mentioned above)
+Last-Event-ID
+If your request meets these conditions, you can make a cross-origin request without any special CORS configuration on the server. The server should respond with the appropriate CORS headers, including Access-Control-Allow-Origin to specify which origins are allowed to access the resource.
+Response Headers
+ Response headers are a crucial part of the HTTP (Hypertext Transfer Protocol) response sent by a web server when a client, typically a web browser, makes a request for a resource like a web page or a file. Response headers provide important metadata and instructions to the client regarding how to handle the response and how the requested resource should be treated. Here are some common response headers and their purposes:
+
+HTTP Status Code: While not technically a header, the HTTP status code is an essential part of the response. It indicates the outcome of the request. For example, a status code of 200 OK means the request was successful, while 404 Not Found indicates that the requested resource was not found.
+
+Content-Type: This header specifies the media type of the resource being sent in the response. For example, "Content-Type: text/html" indicates that the response contains HTML content, while "Content-Type: application/json" signifies JSON data.
+
+Content-Length: This header indicates the size of the response body in bytes. It helps the client know how much data to expect and can be useful for managing network resources.
+
+Cache-Control: This header provides instructions to the client on how to cache the response. For example, "Cache-Control: no-cache" tells the client not to cache the response, while "Cache-Control: max-age=3600" instructs the client to cache the response for one hour.
+
+Location: Often used in redirection responses (e.g., 301 Moved Permanently or 302 Found), this header provides the new URL to which the client should navigate.
+
+Server: This header typically identifies the web server software and version being used. For example, "Server: Apache/2.4.41 (Ubuntu)".
+
+Date: The Date header indicates the date and time when the response was generated by the server.
+
+Last-Modified: This header specifies the date and time when the requested resource was last modified. It is often used in conjunction with caching to determine if a cached version of the resource is still valid.
+
+ETag: An entity tag is a unique identifier for a specific version of a resource. It's used for cache validation. If the ETag of a cached resource matches the one in the response, the client can use the cached version; otherwise, it needs to fetch the updated resource.
+
+Content-Encoding: This header specifies the encoding applied to the response content. Common values include "gzip" for gzip compression and "deflate" for deflate compression.
+
+Set-Cookie: This header is used to set cookies on the client's browser. It allows servers to maintain session information and store data on the client side.
+
+
