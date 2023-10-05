@@ -1,0 +1,124 @@
+ File and FileReader
+ To handle file uploads and read the contents of a file using JavaScript, you can use the File object and the FileReader API.
+ A file reader is a software or programming component that allows you to read the contents of a file stored on a computer or a storage device. File readers are essential for various tasks, such as reading and processing text files, configuration files, data files, or any other file format.
+The main method is as follows:
+
+readAsArrayBuffer(blob) – read the data in binary format ArrayBuffer.
+readAsText(blob, [encoding]) – read the data as a text string with the given encoding (utf-8by default).
+readAsDataURL(blob) – read the binary data and encode it as base64 data url.
+abort() – cancel the operation.
+Here’s an example of reading a file
+ FileReader for blobs
+
+FileReadercan read not just files, but any blobs.
+
+We can use it to convert a blob to another format:
+
+readAsArrayBuffer(blob) – to ArrayBuffer,
+readAsText(blob, [encoding]) – to string (an alternative to TextDecoder),
+readAsDataURL(blob) – to base64 data url.
+FileReaderSync is available inside Web Workers
+
+For Web Workers, there also exists a synchronous variant of FileReader, called FileReaderSync.
+
+Its reading methods read* do not generate events, but rather return a result, as regular functions do.
+
+That’s only inside a Web Worker though, because delays in synchronous calls, that are possible while reading from files, in Web Workers are less important. They do not affect the page.
+
+In summary the following can be noted for File objects inherit from Blob.
+
+In addition to Blob methods and properties, Fileobjects also have name and lastModifiedproperties, plus the internal ability to read from filesystem. We usually get File objects from user input, like <input> or Drag’n’Drop events (ondragend).
+
+FileReader objects can read from a file or a blob, in one of three formats:
+
+String (readAsText).
+ArrayBuffer (readAsArrayBuffer).
+Data url, base-64 encoded (readAsDataURL).
+In many cases though, we don’t have to read the file contents. Just as we did with blobs, we can create a short url with URL.createObjectURL(file) and assign it to <a> or <img>. This way the file can be downloaded or shown up as an image, as a part of canvas etc.
+
+To send a File over a network, that’s also easy: network API like XMLHttpRequest or fetch natively accepts File objects
+fetch
+ The Fetch API in JavaScript is a modern and powerful way to make HTTP requests to interact with web services and retrieve data from external sources, such as APIs. It provides a cleaner and more flexible alternative to the older XMLHttpRequest for handling network requests. Fetch returns a Promise that resolves to the Response to that request, whether it is successful or not.
+ Post Requests
+ In JavaScript, you can make POST requests using the fetch API, which provides a modern and convenient way to make HTTP requests.
+Sending an Image
+ Binary data can be submitted directly using Blob or BufferSource.
+Response properties:
+
+response.status – HTTP code of the response,
+
+response.ok – true is the status is 200-299.
+
+response.headers – Map-like object with HTTP headers.
+
+Methods to get response body:
+
+response.json() – parse the response as JSON object,
+
+response.text() – return the response as text,
+
+response.formData() – return the response as FormData object (form/multipart encoding, see the next chapter),
+
+response.blob() – return the response as Blob(binary data with type),
+
+response.arrayBuffer() – return the response as ArrayBuffer (pure binary data),
+
+Fetch options so far:
+
+method – HTTP-method,
+
+headers – an object with request headers (not any header is allowed),
+
+body – string, FormData, BufferSource, Blob or UrlSearchParams object to send. fetch users from Github
+ Fetching a user from GitHub refers to the process of retrieving information about a specific GitHub user account using the GitHub API. The GitHub API allows developers to programmatically access various data related to users, repositories, organizations, and more on the GitHub platform.
+
+Here's an explanation of how to fetch a user from GitHub
+
+1. **Authentication**: To interact with the GitHub API, you typically need to authenticate your requests. GitHub uses tokens for authentication. You can generate a Personal Access Token (PAT) in your GitHub account settings. This token is used to prove your identity and access certain data depending on the permissions you grant it.
+
+2. **API Endpoint**: Determine the API endpoint you need to use to fetch a user. The standard endpoint for fetching a user's information is:
+
+```
+GET https://api.github.com/users/{username}
+```
+
+Replace `{username}` with the actual GitHub username of the user you want to fetch.
+
+3. **HTTP Request**: Use an HTTP client or library in your chosen programming language to make a GET request to the specified API endpoint. You'll include your authentication token in the request headers.
+
+Here's a Python example using the `requests` library:
+
+```python
+import requests
+
+# Replace 'YOUR_ACCESS_TOKEN' with your actual GitHub personal access token
+access_token = 'YOUR_ACCESS_TOKEN'
+username = 'target_user' # Replace with the GitHub username you want to fetch
+
+# Set the API URL for fetching the user
+api_url = f'https://api.github.com/users/{username}'
+
+# Set the headers with your access token
+headers = {
+'Authorization': f'token {access_token}'
+}
+
+# Make a GET request to fetch the user
+response = requests.get(api_url, headers=headers)
+
+# Check if the request was successful
+if response.status_code == 200:
+user_data = response.json()
+print(f"Username: {user_data['login']}")
+print(f"Name: {user_data['name']}")
+# ... other user information
+else:
+print(f"Failed to fetch user. Status code: {response.status_code}")
+```
+
+4. **Parse the Response**: If the GET request is successful (status code 200), the response will contain the user's information in JSON format. You can parse this JSON data to access specific user details like username, name, email, bio, and more.
+
+5. **Error Handling**: Handle errors in case the request fails. GitHub's API may return different status codes and error messages for various situations, so it's essential to check the status code and handle errors accordingly.
+
+By following these steps, you can fetch information about a GitHub user programmatically using the GitHub API, which can be useful for building applications, integrations, or automation tasks that involve GitHub data.
+
